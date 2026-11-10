@@ -1,0 +1,48 @@
+{
+  "name": "j-iports-oficina",
+  "version": "1.0.1",
+  "private": true,
+  "description": "Gestão local para a oficina mecânica J-Iports",
+  "main": "desktop/main.js",
+  "scripts": {
+    "start": "node server.js",
+    "desktop": "electron .",
+    "icon:generate": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/create-icon.ps1",
+    "build:portable": "electron-builder --win portable --x64 --config.directories.output=release/portable",
+    "build:installer": "electron-builder --win nsis --x64 --config.directories.output=release/installer",
+    "build:desktop": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/build-desktop.ps1",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "express": "^5.1.0",
+    "sql.js": "^1.13.0"
+  },
+  "devDependencies": {
+    "electron-builder": "^26.0.12",
+    "electron": "^45.2.3"
+  },
+  "overrides": {
+    "minimatch": "^11.0.5"
+  },
+  "build": {
+    "appId": "com.jiports.oficina",
+    "productName": "J-Iports",
+    "directories": {
+      "buildResources": "assets"
+    },
+    "win": {
+      "icon": "assets/j-iports.ico"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "J-Iports"
+    },
+    "portable": {
+      "artifactName": "J-Iports-${version}-portable.${ext}"
+    }
+  }
+}
